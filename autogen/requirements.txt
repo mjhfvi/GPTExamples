@@ -1,0 +1,12 @@
+pydantic
+fastapi
+typer
+uvicorn
+arxiv
+flaml[automl]
+pyautogen
+langchain
+langchain_openai
+autogen-agentchat
+autogenstudio
+psycopg[binary,pool]

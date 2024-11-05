@@ -1,0 +1,33 @@
+source: https://microsoft.github.io/autogen/0.2/docs/autogen-studio/getting-started#running-the-application
+https://pypi.org/project/autogenstudio/
+autogenstudio ui --help
+
+
+git clone https://github.com/microsoft/autogen.git
+https://microsoft.github.io/autogen/0.2/docs/autogen-studio/getting-started#running-the-application
+
+docker run -d -p 8081:8081 ghcr.io/lludlow/autogen-studio
+
+export OPENAI_API_KEY=""
+
+### Test
+## pull python image
+docker pull bitnami/python:3.11.10
+
+## manual install pip packages
+docker run -it --name autogenstudio-temp -v $(pwd):/app:ro bitnami/python:3.11.10 /bin/bash
+pip install autogenstudio
+pip install flaml[automl]
+pip install "psycopg[binary,pool]"
+
+## automatic install pip packages with requirements
+docker run -it --name autogenstudio-temp -v $(pwd):/app:ro bitnami/python:3.11.10 pip install -r requirements.txt
+
+docker commit autogenstudio-temp autogenstudio-new
+
+docker run -it -p 8081:8081 autogenstudio-new autogenstudio ui --host 0.0.0.0 --port 8081 --database-uri postgresql+psycopg://adminuser:12345@192.168.50.50/autogen
+
+## Working
+docker run -it --name temp-container -v $(pwd):/app:ro bitnami/python pip install -r requirements.txt
+docker commit temp-container new-container
+docker run -it new-container wheel
