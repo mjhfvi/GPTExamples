@@ -1,0 +1,7 @@
+for a node js application
+
+- write ci cd jenkins pipeline
+- write dockerfile to build the application
+- write jenkinsfile to build the application
+- write kubernetes manifest to deploy the application
+- write argocd files to deploy the project
