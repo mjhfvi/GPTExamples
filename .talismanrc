@@ -1,20 +1,8 @@
 fileignoreconfig:
-- filename: autogen/README.md
-  checksum: 2982a9d65e5ecbeb1abfe9197e23c14d955e39fb7a2b911c377444e7f34cf243
+- filename: autogen/examples/buildApp.py
+  checksum: 30dd6a0f9faa9b83bf795f033469958fcc2b9385d5542b50b3122b2e7095eb1a
+- filename: autogen/buildApp.py
+  checksum: d73a5eb6849722f531699b8795fe99e48bbd0938ada8e17c101fc11ffa102a20
 - filename: autogen/agent_guidelines_code.md
-  checksum: ea8ec94f93d44e99263b333dc634f84de4b42f5187f80f37589f0d4639db04c5
-- filename: autogen/examples/guessANumber.py
-  checksum: 16bfc5fd33e09bfeaf7fb5521cf63222d29cde1902db80e9e42667311fa22a54
-- filename: autogen/examples/stockPriceChart.py
-  checksum: de7ddad37c83422fe9a5e361e3e9d7459d47c2f550d7db68ef18d602f8849c6f
-- filename: autogen/examples/codeExecutor.py
-  checksum: b2b63e602af93417abfe0ee1d4f0089a13b2175e3d609d0d23d45442e50f5769
-- filename: autogen/examples/summarizeWikipediaContent.py
-  checksum: 540b16f1c3d9869b2b7aa130e548a96ab53f6b7237b8104c5b50898d5ff3b502
-- filename: autogen/examples/tellMeAJoke01.py
-  checksum: 071a825154d96ee041fee6e5dd542058e7894ca72a79cfe1d5ccc3bdd3f40915
-- filename: autogen/examples/tellMeAJoke02.py
-  checksum: 25af118a1bfb5f9bb39ed15bb8707978bc670af56145a58594ed12ea89b031f0
-- filename: autogen/tools/skill_web_search.py
-  checksum: 73e7ff7368da4dabc5c9a571a4516297a73c3f7bd5343e97999f92cb5f58fc55
+  checksum: 236fd79a76b116a23482a27a20c2ec7f6cadb13931b27f894db503142ccdccb3
 version: ""
