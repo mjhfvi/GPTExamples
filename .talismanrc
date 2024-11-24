@@ -1,0 +1,10 @@
+fileignoreconfig:
+- filename: .gitleaksignore
+  checksum: 9f200e34d69a4b7926c82c9cb76a20e0d87ce283cde62f525eb3ec3bb11a4a65
+- filename: .pre-commit-config.yaml
+  checksum: 49ebfbc42af81f87f2daea111d9abacffd693b502a1f50332ca8b1cc0c6422be
+- filename: .secrets.baseline
+  checksum: 04f59d03781078256bcfdd3fec27470fb4154c5b939e6be3257b7944b051b089
+- filename: .gitleaks.toml
+  checksum: b2ea2cc2766ded240d0608638c21c76b01cc5efaa8cdb8f9422ec4d9c47195f7
+version: ""

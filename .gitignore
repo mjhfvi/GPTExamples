@@ -1,1 +1,12 @@
-autogen-studio\
+AutoGPT/*
+airllm/*
+anythingllm/*
+autogen-studio/*
+text-generation-webui/*
+ai-agents-masterclass/*
+.venv/*
+autogen/.venv/*
+autogen/.cache/*
+autogen/examples/.cache/*
+autogen/examples/work_dir/*
+models - Shortcut.lnk
