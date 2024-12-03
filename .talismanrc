@@ -1,19 +1,7 @@
 ---
 fileignoreconfig:
-- filename: DOCKER.md
-  checksum: b18abb619e34dfba4019de9bb56285ce1dc026c461aa077cde374d8fc51bca92
-- filename: autogen/appMadlanProject/buildApp.py
-  checksum: 168551edd542b0f3a1439b394f735d40955e4f03b7ccae3079b1fb8283443a12
-- filename: autogen/examples/buildAppInitiateChats.py
-  checksum: 1d8140866ff1e880d13d3e67a99db3f6e6b8b5234fcf4226ca55a677b42ac232
-- filename: autogen/examples/buildAppWithGroupChat.py
-  checksum: cf6d6d354e8f02656b4c2994e311c38bf4c9a2386c2b9291dacbf85eb2d632f1
-- filename: autogen/examples/buildAppWithTeam.py
-  checksum: 9f338c54108de840f519742be2c12d3befdcdfec5a2f0df89135a664e7398b40
-- filename: autogen/examples/buildApp.py
-  checksum: 24ac9afd506e20e5bfd9ded5b9731265f1857ff8d8b73e3363f603bf61e8beb5
-- filename: autogen/llmProject/buildApp.py
-  checksum: 98b0b853ada76499795fc49dd6e910299d11ab022eeaa44c76d7514f0497cd82
-- filename: autogen/llmProject/Project_Guidelines_Devops_Team.txt
-  checksum: fd04df4d4931c4fceec53d2cdc3c85037c45aece8ca61448b243af01f653ffd9
+- filename: README.md
+  checksum: 915f8ff7c2293492c9cde257a7a86bd0264a2e6f6ed54beb578d1ffb2afd2f63
+- filename: autogen/buildApp.py
+  checksum: 265730e89f73b2534a5ceda6e51dec93020b3be696f0f0e0b87f3a2e8d7ba7c5
 version: ""

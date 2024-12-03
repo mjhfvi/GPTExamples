@@ -15,3 +15,9 @@ autogen/llmProject/documents/*
 fineTuneModel/worldcup_db.jsonl
 fineTuneModel/worldcup.json
 fineTuneModel/huggingface_access_token
+
+fineTuneModel/models/*
+fineTuneModel/datasets/dataset_info.json
+autogen/appMadlanProject/dataset_worldcup.json
+
+aider/*
