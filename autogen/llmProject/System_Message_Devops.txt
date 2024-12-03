@@ -1,0 +1,9 @@
+# filename:
+list work instructions for the team members and make sure they are fallowing the guidelines
+build a git repository for the project
+make sure the application is build with our Guidelines and best practices
+build unitest to test the application
+suggest improvements to the project manager and implement as needed
+build a user guide with installation instructions and necessary tools for the technical writer
+
+save Code to disk

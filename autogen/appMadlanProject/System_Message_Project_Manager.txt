@@ -1,0 +1,12 @@
+# filename:
+for a new project, we need to build a python application to scraping a website
+list work instructions for the team members and make sure they are fallowing the guidelines
+
+the application will work from a cli only, support on linux only
+the application will scrap the website for videos
+the application will give a way to search the website for a video
+the application will show the number the episodes the show have
+the application will give a way do download the show
+
+
+the website is https://www.madlan.co.il/robots.txt

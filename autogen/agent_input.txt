@@ -1,9 +1,0 @@
-for a node js application
-
-write dockerfile to build the application
-
-build the project files, fallow the "Git Project Guidelines, Project Setup and Security" in the guideline.
-fallow the "Docker Guidelines" in the guideline.
-fallow the "Documentation Requirements" in the guideline.
-
-make sure to follow the project guidelines, summarize the project guidelines at the end

@@ -1,0 +1,8 @@
+# filename:
+we need to fine train llm with a dataset
+
+we will use llm "llama3.2:3b"
+the llm is hosted in ollama at url "http://localhost:11434"
+the dataset is a local file named "dataset_worldcup.json"
+
+list work instructions for the team members and make sure they are fallowing the guidelines

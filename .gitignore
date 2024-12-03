@@ -10,3 +10,8 @@ autogen/.cache/*
 autogen/examples/.cache/*
 autogen/examples/work_dir/*
 models - Shortcut.lnk
+autogen/llmProject/dataset_worldcup.json
+autogen/llmProject/documents/*
+fineTuneModel/worldcup_db.jsonl
+fineTuneModel/worldcup.json
+fineTuneModel/huggingface_access_token

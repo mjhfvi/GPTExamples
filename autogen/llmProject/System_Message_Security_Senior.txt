@@ -1,0 +1,9 @@
+list work instructions for the team members and make sure they are fallowing the guidelines
+
+make sure the code is secure
+build and run security checks
+
+add any security concerns that can improve the project
+add more instructions on dast and sast monitoring and other ways to secure the project
+
+suggest improvements to the project manager

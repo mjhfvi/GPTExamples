@@ -1,0 +1,213 @@
+# Application Lifecycle Management (ALM) Guidelines:
+
+1. Planning and Requirements:
+   - Requirements Management:
+     * Document functional and non-functional requirements
+     * Maintain traceability matrix
+     * Version control requirements documentation
+     * Link requirements to code changes
+   - Project Planning:
+     * Define project milestones
+     * Create sprint/iteration plans
+     * Resource allocation
+     * Risk assessment and mitigation
+
+2. Development Phase:
+   - Version Control:
+     * Use feature branching strategy
+     * Enforce branch protection rules
+     * Follow semantic versioning
+     * Maintain clean commit history
+   - Code Quality:
+     * Implement code review process
+     * Static code analysis
+     * Code coverage requirements
+     * Coding standards enforcement
+   - Development Environment:
+     * Containerized development environment
+     * Local testing capabilities
+     * Development-production parity
+     * Dependency management
+
+3. Build and Integration:
+   - Continuous Integration:
+     * Automated build process
+     * Unit test execution
+     * Integration test suite
+     * Code quality gates
+     * Security scanning
+   - Artifact Management:
+     * Version tagging
+     * Artifact repository organization
+     * Dependency scanning
+     * Build reproducibility
+
+4. Testing and Quality Assurance:
+   - Test Management:
+     * Test case documentation
+     * Test environment management
+     * Test data management
+     * Test execution tracking
+   - Quality Gates:
+     * Code coverage thresholds
+     * Performance benchmarks
+     * Security compliance
+     * Documentation requirements
+
+5. Deployment and Release:
+   - Release Management:
+     * Release planning
+     * Change management process
+     * Release notes generation
+     * Version tracking
+   - Deployment Strategy:
+     * Blue-green deployments
+     * Canary releases
+     * Rollback procedures
+     * Configuration management
+
+6. Operations and Monitoring:
+   - Application Monitoring:
+     * Performance metrics
+     * Error tracking
+     * User analytics
+     * Resource utilization
+   - Incident Management:
+     * Alert configuration
+     * Incident response procedures
+     * Post-mortem analysis
+     * Knowledge base maintenance
+
+7. Feedback and Optimization:
+   - Continuous Improvement:
+     * Performance optimization
+     * Resource optimization
+     * Process improvement
+     * Technical debt management
+   - User Feedback:
+     * Feature usage tracking
+     * User satisfaction metrics
+     * Bug reporting process
+     * Feature request handling
+
+8. Maintenance and Support:
+   - System Maintenance:
+     * Patch management
+     * Security updates
+     * Dependency updates
+     * Database maintenance
+   - Support Process:
+     * Support ticket management
+     * SLA monitoring
+     * Knowledge base updates
+     * User documentation
+
+# Python Application Diagramming Guidelines:
+
+1. Tool Selection:
+   - Use Diagrams library (diagrams.mingrammer.com):
+     * Provides cloud architecture diagrams
+     * Supports multiple providers and resources
+     * Requires Graphviz installation
+   - Alternative Tools:
+     * PlantUML for UML diagrams
+     * Mermaid for various diagram types
+     * Graphviz for complex graph visualization
+
+2. Diagram Organization:
+   - Structure Hierarchy:
+     * Group related components together
+     * Use clear directional flow
+     * Maintain consistent spacing
+     * Label connections meaningfully
+   - Layout Best Practices:
+     * Left-to-right or top-to-bottom flow
+     * Minimize crossing lines
+     * Use appropriate clustering
+     * Keep diagram size manageable
+
+3. Code Organization:
+   ```python
+   from diagrams import Diagram, Cluster
+   from diagrams.programming.language import Python
+   from diagrams.onprem.container import Docker
+
+   def create_architecture_diagram():
+       with Diagram("Application Architecture", show=True):
+           with Cluster("Application Layer"):
+               app = Python("Core App")
+
+           with Cluster("Container Layer"):
+               docker = Docker("Container")
+
+           app >> docker
+   ```
+
+4. Documentation:
+   - Include diagram generation code in project
+   - Document diagram update process
+   - Store generated diagrams in 'docs/diagrams/'
+   - Use version control for diagram code
+
+5. Best Practices:
+   - Keep diagrams simple and focused
+   - Use consistent naming conventions
+   - Update diagrams with code changes
+   - Include legend for complex diagrams
+   - Export in both SVG and PNG formats
+
+6. Common Diagram Types:
+   - Architecture Overview:
+     * System components
+     * Data flow
+     * Service interactions
+   - Deployment Diagram:
+     * Infrastructure layout
+     * Network topology
+     * Container relationships
+   - Class/Module Diagram:
+     * Code structure
+     * Dependencies
+     * Inheritance relationships
+
+# Code Execution Guidelines:
+
+1. Basic Execution Requirements:
+   - Handle command execution safely
+   - Set appropriate timeouts
+   - Validate input parameters
+   - Format output for readability
+   - Capture both stdout and stderr
+   - Provide execution status updates
+   - Return results in a structured format
+
+2. Git Integration Requirements:
+   - Initialize git repository with appropriate .gitignore
+   - Set up initial commit with clear commit message
+   - Configure git hooks for code quality
+   - Include README.md with setup instructions
+   - Add LICENSE file as needed
+
+3. Security and Code Quality:
+   - Implement pre-commit hooks for:
+     * Code formatting
+     * Linting
+     * Security scanning
+     * Dependency checking
+   - Add security scanning workflows
+   - Implement secrets management
+   - Follow security best practices
+
+4. Environment Management:
+   - Validate all required environment variables
+   - Provide default values where appropriate
+   - Include .env.example file
+   - Document all configuration options
+   - Implement configuration validation
+
+5. Documentation Requirements:
+   - List all created files with summaries
+   - Document architecture decisions
+   - Provide setup instructions
+   - Include troubleshooting guide
+   - Document deployment process
