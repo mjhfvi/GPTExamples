@@ -1,7 +1,7 @@
 ---
 fileignoreconfig:
+- filename: ollama-rag.ipynb
+  checksum: 0105ec93396b7162b55fabb862a67fbd42673c159e5f44e3103459684ea95938
 - filename: README.md
-  checksum: 915f8ff7c2293492c9cde257a7a86bd0264a2e6f6ed54beb578d1ffb2afd2f63
-- filename: autogen/buildApp.py
-  checksum: 265730e89f73b2534a5ceda6e51dec93020b3be696f0f0e0b87f3a2e8d7ba7c5
+  checksum: ca19985afe5f913f4a43da57118d9ff4079a61ba09a41b4e0bd89c172183d62a
 version: ""
