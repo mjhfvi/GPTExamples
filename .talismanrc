@@ -1,7 +1,5 @@
 ---
 fileignoreconfig:
-- filename: ollama-rag.ipynb
-  checksum: 0105ec93396b7162b55fabb862a67fbd42673c159e5f44e3103459684ea95938
 - filename: README.md
-  checksum: ca19985afe5f913f4a43da57118d9ff4079a61ba09a41b4e0bd89c172183d62a
+  checksum: c836e4eb535399d52b16b4056028966eddb2e4d837b79372bdddc4e40df3125a
 version: ""

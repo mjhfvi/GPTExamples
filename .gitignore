@@ -21,3 +21,5 @@ fineTuneModel/datasets/dataset_info.json
 autogen/appMadlanProject/dataset_worldcup.json
 
 aider/*
+autogen/llmProject/.cache/11/cache.db
+Testing_Projects/*
