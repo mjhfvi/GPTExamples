@@ -28,3 +28,4 @@ fineTuneModel/datasets/dataset_info.json
 fineTuneModel/worldcup_db.jsonl
 MetaGPT/*
 langchain/chroma_db/*
+autogen/llmProject/__pycache__/*
