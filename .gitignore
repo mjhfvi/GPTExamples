@@ -29,3 +29,5 @@ fineTuneModel/worldcup_db.jsonl
 MetaGPT/*
 langchain/chroma_db/*
 autogen/llmProject/__pycache__/*
+langchain/datasets/*
+langchain/vector_stores/__pycache__/*

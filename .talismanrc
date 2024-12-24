@@ -1,5 +1,7 @@
 ---
 fileignoreconfig:
-- filename: DOCKER.md
-  checksum: 7057c220708fec249616257f87bc420632c65c708aefb368c9b98ad8a356a5a5
+- filename: langchain/loaders/directoryJSONLoader.py
+  checksum: 4c8d18ed0589455f521e776d7ea46b62953e1680b03e8b9c8505ab9a8001263f
+- filename: langchain/retrievers/jsonLoader.py
+  checksum: 34279e973e4487cb6b72ea510a180cd17751bc3e7a532fefc0ef325efc9dc44a
 version: ""
