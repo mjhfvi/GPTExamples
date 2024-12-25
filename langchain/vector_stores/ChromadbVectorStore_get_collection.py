@@ -4,7 +4,7 @@ from __future__ import annotations
 import chromadb
 # from chromadb.config import Settings
 
-# Server DB
+# Chroma DB Server Variables
 CHROMA_HOST = '172.22.54.208'
 CHROMA_PORT = 8000
 CHROMA_COLLECTION_NAME = 'mjhfvi'

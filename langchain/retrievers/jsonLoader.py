@@ -3,10 +3,9 @@ from __future__ import annotations
 
 from langchain_community.document_loaders import JSONLoader
 
-# Define the metadata extraction function.
-
 
 def metadata_func(record: dict, metadata: dict) -> dict:
+    '''Define the metadata extraction function.'''
     metadata['sender_name'] = record.get('sender_name')
     metadata['timestamp_ms'] = record.get('timestamp_ms')
     return metadata

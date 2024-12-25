@@ -3,7 +3,7 @@ from __future__ import annotations
 import chromadb
 from chromadbx import UUIDGenerator
 
-# Chrome Server DB Variables
+# Chroma DB Server Variables
 CHROMA_HOST = '172.22.54.208'
 CHROMA_PORT = 8000
 CHROMA_COLLECTION_NAME = 'mjhfvi'
