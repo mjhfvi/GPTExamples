@@ -1,0 +1,16 @@
+# Source: https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/
+# sudo apt install python3.12-venv
+# python3 -m venv .venv
+# source .venv/bin/activate
+# which python3
+# python3 -m pip install -r requirements.txt
+# deactivate
+
+autogen-agentchat==0.4.0.dev8
+autogen-core==0.4.0.dev8
+autogen-ext==0.4.0.dev8
+# python3 -m pip install --upgrade pip
+# python3 -m pip --version
+
+autogenstudio
+psycopg[binary]
