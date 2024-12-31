@@ -1,20 +1,6 @@
-chromadb==0.5.23; sys_platform == 'linux'
 flake8
 isort
 jq
-langchain
-langchain-chroma
-langchain-community
-langchain-core
-langchain-experimental
-langchain-ollama
-langchain-text-splitters
-langchain_anthropic
-langgraph
 pep8
-
-sentence_transformers; sys_platform == 'linux'
-tokenizers; sys_platform == 'win32'
-tokenizers==0.20.3; sys_platform == 'linux'
-transformers==4.46.3; sys_platform == 'linux'
+pylint
 virtualenv

@@ -19,8 +19,7 @@ LOADER = DirectoryLoader(
 DOCUMENTS = LOADER.load()
 # print(len(DOCUMENTS))
 
-print(f"{len(DOCUMENTS)} documents loaded.")
-print('Creating vectorstore.')
+print(f"{len(DOCUMENTS)} Documents Loaded, Creating VectorStore.")
 
 TEXT_SPLITTER = RecursiveCharacterTextSplitter(
     chunk_size=500,
@@ -30,8 +29,7 @@ TEXT_SPLITTER = RecursiveCharacterTextSplitter(
 
 DOCUMENTS_TEXT = TEXT_SPLITTER.split_documents(DOCUMENTS)
 
-print(len(DOCUMENTS_TEXT))
-print(DOCUMENTS_TEXT[0])
+print(len(DOCUMENTS_TEXT), 'Number of Split Text Items. ')
 
 EMBEDDINGS = HuggingFaceEmbeddings(
     model_name='all-MiniLM-L6-v2',
@@ -44,23 +42,28 @@ CHROMA_HOST = '172.22.54.208'
 CHROMA_PORT = 8000
 CHROMA_COLLECTION_NAME = 'mjhfvi'
 
-# Connect to Chroma DB with HttpClient Library
+# # Connect to Chroma DB with HttpClient Library
 CHROMA_CLIENT = chromadb.HttpClient(
     host=CHROMA_HOST,
     port=CHROMA_PORT,
     ssl=False
 )
 
-# Connect to Chroma DB with Client Library
+# # Connect to Chroma DB with Client Library
+print('Connecting to Chroma DB Server to Create Collection.')
 COLLECTION = CHROMA_CLIENT.get_or_create_collection(
-    name=CHROMA_COLLECTION_NAME)
-
-COLLECTION.add(DOCUMENTS_TEXT)
-
-results = COLLECTION.query(
-    # Chroma will embed this for you
-    query_texts=['This is a query document'],
-    n_results=2     # how many results to return
+    name=CHROMA_COLLECTION_NAME
 )
 
-print(results)
+print('Collection Created. Adding Documents.\n')
+print(DOCUMENTS_TEXT)
+# wait = input("PRESS ENTER TO CONTINUE.")
+COLLECTION.add(DOCUMENTS_TEXT)
+
+# results = COLLECTION.query(
+#     # Chroma will embed this for you
+#     query_texts=['This is a query document'],
+#     n_results=2     # how many results to return
+# )
+
+# print(results)

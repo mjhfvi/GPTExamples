@@ -1,5 +1,5 @@
 **/.venv/*
-**/.vscode/*
+# **/.vscode/*
 **/.cache/*.*
 **/__pycache__/*
 
@@ -24,3 +24,5 @@ langchain/chroma_db/*
 langchain/datasets/*
 
 anythingLLM/*
+huggingface_access_token
+langchain/chroma_langchain_db/chroma.sqlite3

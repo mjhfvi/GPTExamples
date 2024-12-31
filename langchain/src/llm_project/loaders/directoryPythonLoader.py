@@ -3,10 +3,8 @@ from __future__ import annotations
 
 from langchain_community.document_loaders import DirectoryLoader
 from langchain_community.document_loaders import PythonLoader
-from langchain_huggingface import HuggingFaceEmbeddings
-
-from langchain.text_splitter import Language
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+# from langchain_huggingface import HuggingFaceEmbeddings
+# from langchain.text_splitter import Language, RecursiveCharacterTextSplitter
 
 LOADER = DirectoryLoader(
     './',
@@ -15,8 +13,11 @@ LOADER = DirectoryLoader(
     show_progress=True
 )
 
+print(LOADER)
+# print(len(LOADER))
 DOCUMENTS = LOADER.load()
-# print(len(DOCUMENTS))
+print(len(DOCUMENTS))
 
 print(f"{len(DOCUMENTS)} documents loaded.")
-print('Creating vectorstore.')
+# print('Creating vectorstore.')
+print(DOCUMENTS)

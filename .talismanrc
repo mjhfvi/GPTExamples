@@ -1,7 +1,13 @@
 ---
 fileignoreconfig:
-- filename: langchain/loaders/directoryJSONLoader.py
-  checksum: 4c8d18ed0589455f521e776d7ea46b62953e1680b03e8b9c8505ab9a8001263f
-- filename: langchain/retrievers/jsonLoader.py
-  checksum: 34279e973e4487cb6b72ea510a180cd17751bc3e7a532fefc0ef325efc9dc44a
+- filename: langchain/src/llm_project/tools/githubTool.py
+  checksum: 179ee87ea6c9fe82d647b1e3deb4b0f6faaa10fd9ec2f6f5ea898fdae4837305
+- filename: autogen/llmProject/autogen.py
+  checksum: 37d457915519fcb1bebff2dedca20b695488c02e4a77a78911e624523fdbaea9
+- filename: autogen-studio/README.md
+  checksum: bf185ab716f0f40610b4de81a9896d5645582369e0024ad9160713004770acd1
+- filename: ollama/ollama-rag.ipynb
+  checksum: 1b9bd04d08972009d783da0a0d8a451122e417174264dbad5659a3eff7b51533
+- filename: langchain/src/llm_project/loaders.py
+  checksum: a4b26d230564aaa8b6da5120ee8a706e104c8a33979ac1716b5b364d90bf24fe
 version: ""
