@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import sys
 from datetime import datetime
 
 # header_template = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36',}
@@ -12,9 +13,9 @@ def hacker_news_retriever(url):
     start_time = datetime.now()
     try:
 
-        LOADER = HNLoader(url, show_progress=True,
+        loader = HNLoader(url, show_progress=True,
                           header_template=header_template)
-        DATA = LOADER.load()
+        DATA = loader.load()
         DATA[0].page_content[:300]
         print(DATA[0].metadata)
         # print(DATA[0].page_content[:300])
@@ -33,8 +34,8 @@ def Wikipedia_retriever(topic):
     start_time = datetime.now()
     try:
         RETRIEVER = WikipediaRetriever()
-        DOCUMENTS = RETRIEVER.invoke(topic)
-        print(DOCUMENTS[0].page_content[:400])
+        documents = RETRIEVER.invoke(topic)
+        print(documents[0].page_content[:400])
 
     except Exception as error:
         print('Something went wrong when Retrieving Documents: ',
@@ -43,3 +44,8 @@ def Wikipedia_retriever(topic):
         end_time = datetime.now()
         print('\nFinished retrieve wikipedia topic: ',
               'Duration: {}'.format(end_time - start_time))
+
+
+if __name__ == '__main__':
+    print('this is not the main script, exiting ...')
+    sys.exit()

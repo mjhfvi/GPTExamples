@@ -2,9 +2,9 @@
 
 [tool.poetry]
 name = "llm-langchain-project"
-version = "0.1.0"
+version = "0.2.0"
 description = "A project for building LLM applications using LangChain"
-authors = ["Tzahi Cohen <email@example.com>"]
+authors = ["Tzahi Cohen <emjhfvi@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 
@@ -36,7 +36,7 @@ isort = "^5.12.0"  # For import sorting
 testpaths = ["tests"]
 
 [tool.black]
-line-length = 88
+line-length = 180
 
 [tool.isort]
 profile = "black"

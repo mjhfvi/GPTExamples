@@ -1,0 +1,28 @@
+{
+  "dictionaries": [],
+  "dictionaryDefinitions": [],
+  "ignorePaths": [],
+  "ignoreWords": [
+    "ngrok",
+    "prettyformatter",
+    "bezeqint",
+    "autogenstudio",
+    "comfyui",
+    "dotenv",
+    "fengzhichao",
+    "fooocus",
+    "huggingface",
+    "INNGEST",
+    "langgraph",
+    "lllyasviel",
+    "mintplexlabs",
+    "Ollama",
+    "psycopg",
+    "vectoradmin",
+    "vectorstore",
+    "webui"
+  ],
+  "import": [],
+  "version": "0.2",
+  "words": []
+}

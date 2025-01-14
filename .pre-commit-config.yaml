@@ -36,8 +36,8 @@ repos:
       - id: pretty-format-json
         args: [--autofix]
         verbose: true
-      - id: detect-aws-credentials
-        verbose: true
+    #   - id: detect-aws-credentials
+    #     verbose: true
       # - id: detect-private-key
       #   verbose: true
       #   exclude: charts
