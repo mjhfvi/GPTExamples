@@ -1,9 +1,5 @@
 ---
 fileignoreconfig:
-- filename: langchain/main.py.backup
-  checksum: 22659767c53a7bd2cdb4d1968879dee28e978134941aa664701c1b0fc15923db
-- filename: .secrets.baseline
-  checksum: 29d2254218593c817509e71b6b6353754cd06e3035b967fc9de3d750626cf8f5
-- filename: langchain/src/file_loaders.py
-  checksum: a59860ac03054f19a270ca8f84fd6ef95af9ab786c97e7dffb330cb197df3b7a
+- filename: langchain/.env
+  checksum: 68b3ca1af4fa859b847eabda01728c88199b48fc6a88866717692126d3a3e52f
 version: ""

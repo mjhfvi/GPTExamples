@@ -24,5 +24,9 @@
   ],
   "import": [],
   "version": "0.2",
-  "words": []
+  "words": [
+    "bezetint",
+    "metadatas",
+    "rprint"
+  ]
 }
