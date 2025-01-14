@@ -1,0 +1,88 @@
+{
+  "/_commands": "Source: https://code.visualstudio.com/docs/getstarted/settings",
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[python]": {
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.defaultColorDecorators": "never",
+    "editor.defaultFormatter": "ms-python.autopep8",
+    "editor.formatOnType": true
+  },
+  "[yaml]": {
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.autoIndent": "keep",
+    "editor.formatOnSave": true,
+    "editor.insertSpaces": true,
+    "editor.quickSuggestions": {
+      "comments": false,
+      "other": true,
+      "strings": true
+    },
+    "editor.tabSize": 2
+  },
+  "codeium.enableConfig": {
+    "*": true,
+    "gitignore": true
+  },
+  "copilot.baseUrl": "http://localhost:11434",
+  "copilot.cpuCores": 4,
+  "copilot.documentRetrievalThreshold": 0.001,
+  "copilot.embeddingsModel": "nomic-embed-text",
+  "copilot.kNearestNeighbors": 3,
+  "copilot.maxRetrievalAttempts": 1,
+  "copilot.maxTokenLimit": 4096,
+  "copilot.model": "codellama:7b",
+  "copilot.modelTemperature": "0.2",
+  "copilot.outputType": "code",
+  "copilot.printDebuggingLogs": false,
+  "copilot.similarityMeasure": "cosine",
+  "copilot.systemPrompt": "Comprehensive coding assistant...",
+  "editor.acceptSuggestionOnEnter": "smart",
+  "editor.autoIndent": "full",
+  "editor.cursorBlinking": "expand",
+  "editor.insertSpaces": false,
+  "editor.minimap.autohide": true,
+  "editor.minimap.enabled": true,
+  "editor.minimap.size": "fit",
+  "editor.scrollbar.vertical": "auto",
+  "extensions.autoCheckUpdates": true,
+  "extensions.autoRestart": true,
+  "extensions.autoUpdate": "onlyEnabledExtensions",
+  "extensions.ignoreRecommendations": true,
+  "files.autoSave": "onWindowChange",
+  "files.enableTrash": true,
+  "files.encoding": "utf8",
+  "files.eol": "\n",
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/Thumbs.db": true
+  },
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "flake8.args": [
+    "--max-line-length=200",
+    "--ignore=E401,F401"
+  ],
+  "git.branchProtection": [],
+  "git.enableSmartCommit": true,
+  "git.enableStatusBarSync": true,
+  "git.lfs.enabled": false,
+  "git.showProgress": true,
+  "pylint.args": [
+    "--max-line-length=200",
+    "--disable=W0611,C0114,W0718,C0410,C0103,C0116"
+  ],
+  "python.defaultInterpreterPath": "./.venv/bin/python",
+  "terminal.integrated.automationProfile.linux": null,
+  "window.menuBarVisibility": "toggle",
+  "workbench.colorCustomizations": {
+    "sideBar.background": "#010d1d",
+    "sideBarSectionHeader.foreground": "#ffffff",
+    "sideBarTitle.foreground": "#ffffff"
+  },
+  "workbench.editor.enablePreview": false
+}

@@ -1,0 +1,23 @@
+{
+  "_comment": "See https://go.microsoft.com/fwlink/?LinkId=733558",
+  "tasks": [
+    {
+      "label": "Install All Recommended Extensions",
+      "linux": {
+        "command": "cat .vscode/extensions.json | jq .recommendations[] | xargs -n 1 code . --install-extension"
+      },
+      "presentation": {
+        "reveal": "silent"
+      },
+      "problemMatcher": [],
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "type": "shell",
+      "windows": {
+        "command": "foreach ($ext in (Get-Content -Raw .vscode/extensions.json | ConvertFrom-Json).recommendations) { Write-Host Installing $ext; code --install-extension $ext; }"
+      }
+    }
+  ],
+  "version": "2.0.0"
+}
