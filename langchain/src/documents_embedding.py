@@ -2,17 +2,15 @@ from __future__ import annotations
 
 import os
 import sys
-from datetime import datetime
 
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_ollama import OllamaEmbeddings
-from prettyformatter import pprint
-from src import text_splitters
+from loguru import logger
+# from langchain_ollama import OllamaEmbeddings
+# from src import text_splitters
 
 
-def embeddings_string(model_name='sentence-transformers/all-mpnet-base-v2', debug=False) -> HuggingFaceEmbeddings:
+def embeddings_string(model_name='sentence-transformers/all-mpnet-base-v2', debug=False) -> None:
     """build embeddings string"""
-    # start_time = datetime.now()
     # print('Building Embeddings String ...')
     try:
         # if model_name not in ['sentence-transformers/all-mpnet-base-v2', 'all-MiniLM-L6-v2']:
@@ -31,27 +29,32 @@ def embeddings_string(model_name='sentence-transformers/all-mpnet-base-v2', debu
             # if model_name == 'llama3':
             #     embeddings_model = OllamaEmbeddings(model="llama3")
 
-        return embeddings_model
-    except Exception as error:
-        print('\nAn Error Occurred while building Embeddings string: ',
-              error, '\nError in Definition: ', __name__, 'Exiting ...')
+    except Exception:
+        logger.exception(
+            'An error occurred while running the program, please check the logs for more information. ')
         sys.exit(1)
-    # finally:
-    #     end_time = datetime.now()
-    #     print("Successfully Build Embeddings String: ", 'Duration: {}'.format(end_time - start_time), "\n")
+    except KeyboardInterrupt:
+        logger.error('program terminated by user.')
 
 
-def embeddings_default(model_name):
-    embeddings = HuggingFaceEmbeddings(
-        model_name=model_name,      # model_name='all-MiniLM-L6-v2'
-        model_kwargs={'device': 'cpu'},
-        encode_kwargs={'normalize_embeddings': False},
-    )
-    return embeddings
+def embeddings_default(model_name) -> HuggingFaceEmbeddings:
+    try:
+        embeddings = HuggingFaceEmbeddings(
+            model_name=model_name,      # model_name='all-MiniLM-L6-v2'
+            model_kwargs={'device': 'cpu'},
+            encode_kwargs={'normalize_embeddings': False},
+        )
+        return embeddings
+
+    except Exception:
+        logger.exception(
+            'An error occurred while running the program, please check the logs for more information. ')
+        sys.exit(1)
+    except KeyboardInterrupt:
+        logger.error('program terminated by user.')
 
 
 def embeddings_text(embeddings_model, embeddings_data, debug=False):
-    # start_time = datetime.now()
     try:
         # print(embeddings_data, "\n")
         # if len(embeddings) == len(embeddings):
@@ -66,15 +69,15 @@ def embeddings_text(embeddings_model, embeddings_data, debug=False):
             if debug is True:
                 folder_path = 'data'
                 if not os.path.exists(folder_path):
-                    print(
+                    logger.debug(
                         f"folder {folder_path} did not found, building new folder")
                     os.makedirs(folder_path)
 
                 with open('data/embeddings.txt', 'w') as output:
-                    print("[DEBUG]review value of 'embed': ",
-                          embeddings_config[:5], '...')
+                    logger.debug("review value of 'embed': ",
+                                 embeddings_config[:5], '...')
                     output.write(str(embeddings_config))
-                    print('[DEBUG]print embeddings text to file')
+                    logger.debug('print embeddings text to file')
 
                 # for index, embed in enumerate(embeddings_config[0]):
                 # with open('data/embeddings{}.txt'.format(index), 'w') as output:
@@ -90,15 +93,13 @@ def embeddings_text(embeddings_model, embeddings_data, debug=False):
             # print("[DEBUG]review value of 'embeddings_config', index {}:".format(index), embeddings_config[0][:5], '...')
 
         # return embeddings_config
-    except Exception as error:
-        print('\nAn Error Occurred while building Embeddings Text: ',
-              error, '\nError in Definition: ', __name__, 'Exiting ...')
+
+    except Exception:
+        logger.exception(
+            'An error occurred while running the program, please check the logs for more information. ')
         sys.exit(1)
     except KeyboardInterrupt:
-        print('\nProgram terminated by user.')
-    # finally:
-    #     end_time = datetime.now()
-    #     print("Successfully Build Embeddings Text: ", 'Duration: {}'.format(end_time - start_time), "\n")
+        logger.error('program terminated by user.')
 
 
 def embeddings_text_single_file(embeddings_string, data_to_embeddings):
@@ -109,47 +110,46 @@ def embeddings_text_single_file(embeddings_string, data_to_embeddings):
 
         folder_path = 'data'
         if not os.path.exists(folder_path):
-            print(f"folder {folder_path} did not found, building new folder")
+            logger.debug(
+                f"folder {folder_path} did not found, building new folder")
             os.makedirs(folder_path)
 
         with open('data/embeddings.txt', 'w') as output:
             # print("[DEBUG]review value of 'embeddings_config': ", embeddings_config)
             # print("[DEBUG]review value of 'embeddings_data_output': ", embeddings_data_output[0][:7], '...')
-            print(len(embeddings_data_output), 'Number of Embeddings Items.\n')
+            logger.debug(len(embeddings_data_output),
+                         'Number of Embeddings Items.')
             output.write(str(embeddings_data_output))
             # print("[DEBUG]print embeddings text to file")
             # print("[DEBUG]review value of 'embeddings_data_output': ", embeddings_data_output[0])
 
         return embeddings_data_output[0]
         # return embeddings_data_output['data'][0]['embedding']
-    except Exception as error:
-        print('\nAn Error Occurred while building Embeddings Text to single file: ',
-              error, '\nError in Definition: ', __name__, 'Exiting ...')
+
+    except Exception:
+        logger.exception(
+            'An error occurred while running the program, please check the logs for more information. ')
         sys.exit(1)
     except KeyboardInterrupt:
-        print('\nProgram terminated by user.')
-    # finally:
-    #     end_time = datetime.now()
-    #     print("Successfully Build Embeddings Text: ", 'Duration: {}'.format(end_time - start_time), "\n")
+        logger.error('program terminated by user.')
 
 
 def embedded_query(embeddings, query, embeddings_model):
     # start_time = datetime.now()
     try:
         embedded_query = embeddings_model.embed_query(query)
-        print("Preview 'embedded_query': ", embedded_query[:5])
+        logger.debug("Preview 'embedded_query': ", embedded_query[:5])
         # print("embeddings model: ", embeddings.model_name)
         return embedded_query
 
-    except Exception as error:
-        print('\nAn Error Occurred while Embeddings Query: ', error,
-              '\nError in Definition: ', __name__, 'Exiting ...')
+    except Exception:
+        logger.exception(
+            'An error occurred while running the program, please check the logs for more information. ')
         sys.exit(1)
-    # finally:
-    #     end_time = datetime.now()
-    #     print("Successfully Build Embeddings Query: ", 'Duration: {}'.format(end_time - start_time), "\n")
+    except KeyboardInterrupt:
+        logger.error('program terminated by user.')
 
 
 if __name__ == '__main__':
-    print('this is not the main script, exiting ...')
+    logger.error('this is not the main script, exiting ...')
     sys.exit()

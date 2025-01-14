@@ -1,21 +1,14 @@
 from __future__ import annotations
 
-import json
 import os
 import sys
-from datetime import datetime
 
 import nltk
-from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import CharacterTextSplitter
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from src import documents_embedding
-from src import file_loaders
-# from src import write_file
+from loguru import logger
 
 
 def splitting_documents(loader, chunk_size=1000, chunk_overlap=200, debug=True) -> CharacterTextSplitter:
-    start_time = datetime.now()
     # print('[DEBUG][splitters]Starting Split Documents Process ...')
     # print(loader)
     # print(len(loader))
@@ -71,23 +64,25 @@ def splitting_documents(loader, chunk_size=1000, chunk_overlap=200, debug=True) 
             )
 
             chunks = text_splitter.split_documents(loader)
-            print(f"split {len(loader)} documents into {len(chunks)} chunks.")
+            logger.debug(
+                f"split {len(loader)} documents into {len(chunks)} chunks.")
 
             if debug is True:
-                print("[DEBUG]print value 'chunks': ",
-                      chunks[0].page_content[:50], '...')
-                print('Number of total chunks created', len(chunks))
+                logger.debug("print value 'chunks': ",
+                             chunks[0].page_content[:50], '...')
+                logger.debug('Number of total chunks created', len(chunks))
 
                 folder_path = 'data'
                 if not os.path.exists(folder_path):
-                    print(
+                    logger.warning(
                         f"folder {folder_path} did not found, building new folder")
                     os.makedirs(folder_path)
 
                 for index, chunk in enumerate(chunks):
                     with open('data/chunks{}.txt'.format(index), 'w') as output:
                         output.write(str(chunk.page_content))
-                        print(len(chunk.page_content), 'Tokens in chunk.')
+                        logger.debug(len(chunk.page_content),
+                                     'Tokens in chunk.')
 
                 # for chunk in chunks:
                 #     print(chunk.page_content)
@@ -105,14 +100,15 @@ def splitting_documents(loader, chunk_size=1000, chunk_overlap=200, debug=True) 
             # print("Total number of tokens in split document: ", len(nltk.word_tokenize(chunks[0].page_content)))
             # print("Total number of tokens in split document: ", len(nltk.word_tokenize(chunks[1].page_content)))
 
-            end_time = datetime.now()
-            print('Successfully Split Documents: ',
-                  'Duration: {}'.format(end_time - start_time), '\n')
+            logger.debug('Successfully Split Documents into Chunks ...')
             return chunks
-    except Exception as error:
-        print('\nAn Error Occurred while Performing Documents Split: ',
-              error, '\nError in Definition: ', __name__, 'Exiting ...')
-        exit(1)
+
+    except Exception:
+        logger.exception(
+            'An error occurred while running the program, please check the logs for more information. ')
+        sys.exit(1)
+    except KeyboardInterrupt:
+        logger.error('program terminated by user.')
 
 
 if __name__ == '__main__':

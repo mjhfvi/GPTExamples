@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import os
 import sys
-from datetime import datetime
 
 from langchain_community.document_loaders import CSVLoader
 from langchain_community.document_loaders import DirectoryLoader
@@ -12,12 +11,12 @@ from langchain_community.document_loaders import SeleniumURLLoader
 from langchain_community.document_loaders import TextLoader
 from langchain_community.document_loaders import UnstructuredFileLoader
 from langchain_community.document_loaders import UnstructuredURLLoader
-# from langchain_unstructured import UnstructuredLoader
+from loguru import logger
 
 
 class FileLoaders:
     """A flexible loader for various file types in a directory."""
-    # print('[DEBUG][loaders]Starting Load Documents Process ...')
+    logger.info('Starting Load Documents Process ...')
 
     def __init__(self, path, loader_cls, glob_pattern, debug=True):
         self.path = path
@@ -40,7 +39,6 @@ class FileLoaders:
         Returns:
             list: Loaded documents or None in case of an error.
         """
-        start_time = datetime.now()
         try:
             folder_check(self.path)
             if self.loader_cls.lower() == 'txt':
@@ -99,28 +97,35 @@ class FileLoaders:
                 print("[DEBUG]review value 'documents': ",
                       documents[0].page_content[:50], '...')
             return documents
-        except Exception as error:
-            print(
-                f"Something went wrong when loading {self.loader_cls} documents: ", error, '\nError in Definition: ', __name__)
-        finally:
-            end_time = datetime.now()
-            print(
-                f"Successfully Loading {self.loader_cls} Files: Duration: {end_time - start_time}\n")
+
+        except Exception:
+            logger.exception(
+                'An error occurred while running the program, please check the logs for more information. ')
+            sys.exit(1)
+        except KeyboardInterrupt:
+            logger.error('program terminated by user.')
 
 
 def folder_check(path):
-    folder_check = os.path.exists(path)
-    # if folder_check is True:
-    # print(f"Folder '{path}' Exists, Continue ...")
-    if not folder_check:
-        print(f"Folder '{path}' Does Not Exist, Exiting ...")
-        exit(1)
-    return None
+    try:
+        folder_check = os.path.exists(path)
+        # if folder_check is True:
+        # print(f"Folder '{path}' Exists, Continue ...")
+        if not folder_check:
+            logger.warning(f"Folder '{path}' Does Not Exist, Exiting ...")
+            exit(1)
+        return None
+
+    except Exception:
+        logger.exception(
+            'An error occurred while running the program, please check the logs for more information. ')
+        sys.exit(1)
+    except KeyboardInterrupt:
+        logger.error('program terminated by user.')
 
 
 def txt_directory_loader(path, glob_pattern, show_progress=False, use_multithreading=False) -> DirectoryLoader:
     """Directory Loader for text files\nOnly use 'path' value to set the folder path and search all md files"""
-    # start_time = datetime.now()
     try:
         # text_loader_kwargs = {'autodetect_encoding': True}
         loader = DirectoryLoader(
@@ -134,7 +139,7 @@ def txt_directory_loader(path, glob_pattern, show_progress=False, use_multithrea
 
         documents = loader.load()
         if len(documents) == 0:
-            print('No Documents Found. Exiting ...')
+            logger.warning('No Documents Found. Exiting ...')
             exit(1)
         else:
             print('documents loaded from disk: ', len(documents))
@@ -144,18 +149,17 @@ def txt_directory_loader(path, glob_pattern, show_progress=False, use_multithrea
         # print("[DEBUG][loaders]Documents Loaded: ", documents[0].page_content[:30], "...")
         # document_text = documents
         return documents
-    except Exception as error:
-        print('Something Went Wrong When Loading Documents: ',
-              error, '\nError in Definition: ', __name__)
-        exit(1)
-    # finally:
-    #     end_time = datetime.now()
-    #     print("\nFinished loading text files: ", 'Duration: {}'.format(end_time - start_time))
+
+    except Exception:
+        logger.exception(
+            'An error occurred while running the program, please check the logs for more information. ')
+        sys.exit(1)
+    except KeyboardInterrupt:
+        logger.error('program terminated by user.')
 
 
 def json_file_loader(path) -> JSONLoader:
     """Define the metadata extraction function in the JSON file."""
-    start_time = datetime.now()
     try:
         def metadata_func(record: dict, metadata: dict) -> dict:
             metadata['sender_name'] = record.get('sender_name')
@@ -170,21 +174,19 @@ def json_file_loader(path) -> JSONLoader:
         )
 
         documents = loader.load()
-        print(documents[0].metadata)
-        # print(documents)
+        logger.debug(documents[0].metadata)
         return documents
-    except Exception as error:
-        print('Something went wrong when loading documents: ',
-              error, '\nError in Definition: ', __name__)
-    finally:
-        end_time = datetime.now()
-        print('\nFinished loading json files: ',
-              'Duration: {}'.format(end_time - start_time))
+
+    except Exception:
+        logger.exception(
+            'An error occurred while running the program, please check the logs for more information. ')
+        sys.exit(1)
+    except KeyboardInterrupt:
+        logger.error('program terminated by user.')
 
 
 def md_loader(file_path: int = 'datasets/') -> None:
     """Directory Loader for markdown files\nOnly use 'file_path' value to set the folder path and search all md files"""
-    start_time = datetime.now()
     try:
         text_loader_kwargs = {'autodetect_encoding': True}
         loader = DirectoryLoader(
@@ -198,40 +200,38 @@ def md_loader(file_path: int = 'datasets/') -> None:
 
         documents = loader.load()
         len(documents)
-        print(documents[0].page_content[:100])
+        logger.debug(documents[0].page_content[:100])
         return documents
-    except Exception as error:
-        print('Something went wrong when loading documents: ',
-              error, '\nError in Definition: ', __name__)
-    finally:
-        end_time = datetime.now()
-        print('\nFinished loading markdown files: ',
-              'Duration: {}'.format(end_time - start_time))
+
+    except Exception:
+        logger.exception(
+            'An error occurred while running the program, please check the logs for more information. ')
+        sys.exit(1)
+    except KeyboardInterrupt:
+        logger.error('program terminated by user.')
 
 
 def pdf_loader(file_path: int = 'datasets/') -> None:
     """Directory Loader for pdf files\nuse 'file_path' value to set the folder path and file name"""
-    start_time = datetime.now()
     try:
         file_paths = [file_path]
 
         loader = UnstructuredLoader(file_paths)
         documents = loader.load()
         documents[0]
-        print(documents[0].metadata)
+        logger.debug(documents[0].metadata)
         return documents
-    except Exception as error:
-        print('Something went wrong when loading documents: ',
-              error, '\nError in Definition: ', __name__)
-    finally:
-        end_time = datetime.now()
-        print('\nFinished loading pdf files: ',
-              'Duration: {}'.format(end_time - start_time))
+
+    except Exception:
+        logger.exception(
+            'An error occurred while running the program, please check the logs for more information. ')
+        sys.exit(1)
+    except KeyboardInterrupt:
+        logger.error('program terminated by user.')
 
 
 def python_loader(file_path: int = 'datasets/') -> None:
     """Directory Loader for python files\nOnly use 'file_path' value to set the folder path and search all md files"""
-    start_time = datetime.now()
     try:
         loader = DirectoryLoader(
             file_path,
@@ -243,21 +243,20 @@ def python_loader(file_path: int = 'datasets/') -> None:
         documents = loader.load()
         # print(len(documents))
 
-        print(f"{len(documents)} Documents Loaded.")
+        logger.debug(f"{len(documents)} Documents Loaded.")
         # print('Creating vectorstore.')
         return documents
-    except Exception as error:
-        print('Something went wrong when Loading Documents: ',
-              error, '\nError in Definition: ', __name__)
-    finally:
-        end_time = datetime.now()
-        print('\nFinished Loading Python Files: ',
-              'Duration: {}'.format(end_time - start_time))
+
+    except Exception:
+        logger.exception(
+            'An error occurred while running the program, please check the logs for more information. ')
+        sys.exit(1)
+    except KeyboardInterrupt:
+        logger.error('program terminated by user.')
 
 
 def csv_loader(file_path: int = 'datasets/') -> None:
     """Directory Loader for csv files\nOnly use 'file_path' value to set the folder path and search all md files"""
-    start_time = datetime.now()
     try:
         text_loader_kwargs = {'autodetect_encoding': True}
 
@@ -272,39 +271,37 @@ def csv_loader(file_path: int = 'datasets/') -> None:
         )
 
         documents = loader.load()
-        print(documents)
+        logger.debug(documents)
         return documents
-    except Exception as error:
-        print('Something went wrong when loading documents: ',
-              error, '\nError in Definition: ', __name__)
-    finally:
-        end_time = datetime.now()
-        print('\nFinished loading csv files: ',
-              'Duration: {}'.format(end_time - start_time))
+
+    except Exception:
+        logger.exception(
+            'An error occurred while running the program, please check the logs for more information. ')
+        sys.exit(1)
+    except KeyboardInterrupt:
+        logger.error('program terminated by user.')
 
 
 def url_loader(url) -> None:
-    start_time = datetime.now()
     try:
         urls = [url]
         # 'https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-february-8-2023',
 
         loader = UnstructuredURLLoader(urls=urls)
         DATA = loader.load()
-        print(DATA)
+        logger.debug(DATA)
         DATA[0]
         return DATA
-    except Exception as error:
-        print('Something went wrong when loading documents: ',
-              error, '\nError in Definition: ', __name__)
-    finally:
-        end_time = datetime.now()
-        print('\nFinished loading url: ',
-              'Duration: {}'.format(end_time - start_time))
+
+    except Exception:
+        logger.exception(
+            'An error occurred while running the program, please check the logs for more information. ')
+        sys.exit(1)
+    except KeyboardInterrupt:
+        logger.error('program terminated by user.')
 
 
 def url_youtube_loader(url) -> None:
-    start_time = datetime.now()
     try:
         urls = [url]
         # 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
@@ -317,15 +314,15 @@ def url_youtube_loader(url) -> None:
 
         print(DATA[0])
         return DATA
-    except Exception as error:
-        print('Something went wrong when loading documents: ',
-              error, '\nError in Definition: ', __name__)
-    finally:
-        end_time = datetime.now()
-        print('\nFinished loading youtube url: ',
-              'Duration: {}'.format(end_time - start_time))
+
+    except Exception:
+        logger.exception(
+            'An error occurred while running the program, please check the logs for more information. ')
+        sys.exit(1)
+    except KeyboardInterrupt:
+        logger.error('program terminated by user.')
 
 
 if __name__ == '__main__':
-    print('this is not the main script, exiting ...')
+    logger.error('this is not the main script, exiting ...')
     sys.exit()
