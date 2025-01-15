@@ -41,7 +41,7 @@ def main() -> None:
     try:
         logger.info('query chroma db for data.')
         query_embedding = vector_store.query_data_from_vector_store(
-            chroma_collection_name=env_var[2], query_data=env_var[3])
+            chroma_collection_name=env_var[2], query_data=env_var[3], number_results='1')
         logger.debug('query chroma db for data.')
         query_question = 'what is the total amount of the invoice? and what is the VAT amount to pay? and list the extra service i received'
         logger.info('Starting LLM chat.')
@@ -51,7 +51,10 @@ def main() -> None:
             query_data=env_var[3],
             retriever=query_embedding,
             temperature='0',
-            EMBEDDINGS_MODEL_NAME=env_var[4])
+            EMBEDDINGS_MODEL_NAME=env_var[4],
+            # format="json",
+            # max_output_tokens="50",
+        )
         # ollama_chat.start_ollama_chat(query_question, chroma_collection_name, query_data, EMBEDDINGS_MODEL_NAME=EMBEDDINGS_MODEL_NAME):
 
     except Exception:

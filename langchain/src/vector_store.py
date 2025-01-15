@@ -363,7 +363,7 @@ def chroma_db_add_data_to_collection(connection_string, metadatas, documents, em
         logger.error('program terminated by user.')
 
 
-def chroma_db_query_data_from_collection(connection_string, query_data=None, number_results=5):
+def chroma_db_query_data_from_collection(connection_string, query_data=None, number_results='1'):
     """
     https://docs.trychroma.com/docs/querying-collections/query-and-get
     The query will return the n results closest matches to each query embedding, in order. An optional where filter dictionary can be supplied to filter by the metadata associated with each document. Additionally, an optional where document filter dictionary can be supplied to filter by contents of the document.
@@ -374,9 +374,9 @@ def chroma_db_query_data_from_collection(connection_string, query_data=None, num
 
         query_results = connection_string.query(
             query_texts=['documents'],
-            n_results=number_results,
             # where={"metadata_field": query_data},
-            where_document={'$contains': query_data}
+            where_document={'$contains': query_data},
+            n_results=int(number_results)
         )
         # logger.info('collection data results: ')
         # print(print_color.INFORMATION + 'collection data results: ', print_color.END)
@@ -391,7 +391,7 @@ def chroma_db_query_data_from_collection(connection_string, query_data=None, num
         logger.error('program terminated by user.')
 
 
-def add_data_to_vector_store(chroma_collection_name, data_to_query):
+def add_data_to_vector_store(chroma_collection_name, data_to_query, number_results='-1'):
     try:
         logger.info('adding data to chroma db')
         logger.debug('using chroma collection name: ' + chroma_collection_name)
@@ -415,14 +415,14 @@ def add_data_to_vector_store(chroma_collection_name, data_to_query):
         logger.error('program terminated by user.')
 
 
-def query_data_from_vector_store(chroma_collection_name, query_data):
+def query_data_from_vector_store(chroma_collection_name, query_data, number_results='-1'):
     try:
         logger.info('querying data from vector store')
         chroma_client = chroma_db_setup()
         connection_string = chroma_db_get_collection(
             chroma_client, chroma_collection_name=chroma_collection_name, list_collection_names=True)
         query_embedding = chroma_db_query_data_from_collection(
-            connection_string, query_data=query_data)
+            connection_string, query_data=query_data, number_results=number_results)
         logger.success('successfully query data from vector store')
         logger.debug(query_embedding)
         return query_embedding

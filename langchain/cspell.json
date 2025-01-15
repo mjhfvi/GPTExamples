@@ -26,7 +26,9 @@
   "version": "0.2",
   "words": [
     "bezetint",
+    "docstore",
     "metadatas",
-    "rprint"
+    "rprint",
+    "vectorstores"
   ]
 }

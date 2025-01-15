@@ -1,5 +1,5 @@
 ---
 fileignoreconfig:
-- filename: langchain/.env
-  checksum: 68b3ca1af4fa859b847eabda01728c88199b48fc6a88866717692126d3a3e52f
+    - filename: langchain/.env
+      checksum: 249e468529b57792e72999edf41a8f3088e0ee5491ad0b96722c104540558527
 version: ""
