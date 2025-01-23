@@ -1,5 +1,9 @@
 ---
 fileignoreconfig:
     - filename: langchain/.env
-      checksum: 249e468529b57792e72999edf41a8f3088e0ee5491ad0b96722c104540558527
+      checksum: 5a813a1084addc786cca9cf2f2eec73b09223676108b3f86d0e11d36bb67c4f7
+    - filename: .pre-commit-config.yaml
+      checksum: fc80df563cd56a39e91da9e853eb8a5399c1a6f2d5238631ccbe6188c173c97f
+    - filename: langchain/src/documents_loader.py
+      checksum: 4ca97ed8fc4d98d847ce33132c7bba611edbfb06b9785d771dcf26befc613b62
 version: ""

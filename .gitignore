@@ -2,6 +2,7 @@
 **/.venv/*
 **/.cache/*.*
 **/__pycache__/*
+/home/mjhfvi/repository/GPTExamples/langchain/.env
 
 models - Shortcut.lnk
 
@@ -26,3 +27,7 @@ langchain/datasets/*
 anythingLLM/*
 huggingface_access_token
 langchain/chroma_langchain_db/chroma.sqlite3
+langchain/.env
+langchain/chroma_db.backup/*
+langchain/archive/*
+langchain/chroma_db/*

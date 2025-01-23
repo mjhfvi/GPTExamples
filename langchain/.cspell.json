@@ -26,6 +26,7 @@
   "version": "0.2",
   "words": [
     "bezetint",
+    "chromdb",
     "docstore",
     "metadatas",
     "rprint",

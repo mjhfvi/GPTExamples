@@ -1,4 +1,4 @@
-chromadb==0.5.23; sys_platform == 'linux'
+chromadb==0.5.23; sys_platform == 'linux'       # 0.4.22
 langchain
 langchain-chroma
 langchain-community
@@ -9,6 +9,7 @@ langchain-text-splitters
 langchain_anthropic
 langchain_unstructured
 langgraph
+pre-commit
 
 sentence_transformers; sys_platform == 'linux'
 tokenizers; sys_platform == 'win32'
