@@ -1,12 +1,12 @@
 **/.env
 **/.venv/*
 **/.cache/*.*
+**/datasets/*
+**/chroma_db/*
+**/huggingface_access_token
 **/__pycache__/*
-/home/mjhfvi/repository/GPTExamples/langchain/.env
-
 models - Shortcut.lnk
 
-datasets/*
 autogen/llmProject/documents/*.*
 autogen/appMadlanProject/dataset_worldcup.json
 autogen/examples/work_dir/*
@@ -15,19 +15,12 @@ autogen-studio/models/*
 autogen-studio/agents/*
 
 fineTuneModel/worldcup.json
-fineTuneModel/datasets/dataset_info.json
 fineTuneModel/worldcup_db.jsonl
-fineTuneModel/huggingface_access_token
 fineTuneModel/models/*
+
 Testing_Projects/*
 
-langchain/chroma_db/*
-langchain/datasets/*
-
 anythingLLM/*
-huggingface_access_token
-langchain/chroma_langchain_db/chroma.sqlite3
+
 langchain/.env
-langchain/chroma_db.backup/*
 langchain/archive/*
-langchain/chroma_db/*
