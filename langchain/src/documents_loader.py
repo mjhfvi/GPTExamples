@@ -141,7 +141,7 @@ class DocumentsLoaders():
         files_found_list = glob.glob(pathname=os.path.join(
             self.path, '*.*'), include_hidden=False)
         logger.debug('found files in path: ' + str(len(files_found_list)))
-        json_file_list = []
+        # json_file_list = []
         for file in files_found_list:
             if file.endswith('.json'):
                 logger.debug('Working on file: ' + str(file))
@@ -251,7 +251,7 @@ class DocumentsLoaders():
     def csv_loader(self, file_path):
         """Directory Loader for csv files\nOnly use 'file_path' value to set the folder path and search all md files"""
         try:
-            text_loader_kwargs = {'autodetect_encoding': True}
+            # text_loader_kwargs = {'autodetect_encoding': True}
 
             loader = CSVLoader(
                 file_path=file_path,

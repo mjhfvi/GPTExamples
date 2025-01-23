@@ -28,6 +28,7 @@
     "bezetint",
     "chromdb",
     "docstore",
+    "llms",
     "metadatas",
     "rprint",
     "vectorstores"

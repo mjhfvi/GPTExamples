@@ -79,7 +79,7 @@ def main() -> None:
         set_llm_cache(InMemoryCache())
         # set_llm_cache(SQLiteCache(database_path=".cache.db"))
 
-        ollama_config = local_tools.chat_ollama_config(model='llama3.2:1b')
+        # ollama_config = local_tools.chat_ollama_config(model='llama3.2:1b')
 
         model_config = local_tools.ollama_llm_config(model='llama3.2:1b')
 
