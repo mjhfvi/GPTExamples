@@ -17,12 +17,12 @@ from rich import print_json
 from langchain.docstore.document import Document
 
 
-def chat_ollama_config(model='llama3.2:1b'):
+def chat_ollama_config(model: str = 'llama3.2:1b', temperature: int = 0.2):
     try:
         # logger.info('starting ollama config')
         ollama_config = ChatOllama(
             model=model,   # llama3.2:3b, llama3.2:1b, mistral:7b
-            temperature=0.2,
+            temperature=temperature,
             num_predict=256,
             cache=False,
             base_url='http://localhost:11434',
@@ -38,13 +38,13 @@ def chat_ollama_config(model='llama3.2:1b'):
         logger.error('program terminated by user.')
 
 
-def ollama_llm_config(model='llama3.2:1b'):
+def ollama_llm_config(model: str = 'llama3.2:1b', temperature: int = 0.2):
     try:
         # logger.info('starting ollama config')
         # model = OllamaLLM(model="llama3.2:1b")
         ollama_config = OllamaLLM(
             model=model,   # llama3.2:3b, llama3.2:1b, mistral:7b
-            temperature=0.2,
+            temperature=temperature,
             num_predict=256,
             cache=None,
             base_url='http://localhost:11434',

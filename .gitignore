@@ -22,5 +22,7 @@ Testing_Projects/*
 
 anythingLLM/*
 
-langchain/.env
 langchain/archive/*
+/home/mjhfvi/repository/GPTExamples/.gitignore
+fineTuneModel/*
+langchain/.cspell.json
