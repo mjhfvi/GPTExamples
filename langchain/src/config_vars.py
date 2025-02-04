@@ -8,9 +8,10 @@ import sys
 from dotenv import find_dotenv
 from dotenv import load_dotenv
 from loguru import logger
+from prettyformatter import pprint
+from rich import inspect
 
 from . import local_tools
-
 load_dotenv(dotenv_path='.env', verbose=True)
 
 # set llm model config ##
@@ -79,7 +80,47 @@ if not os.environ.get('CHROMA_DB_PATH') and not os.getenv('CHROMA_DB_PATH'):
 else:
     logger.success('successfully loading CHROMA_DB_PATH key.')
 
-logger.debug('loading CHROMA_COLLECTION_NAME key')
+logger.debug('loading CHROMA_TENANT_NAME key')
+if not os.environ.get('CHROMA_TENANT_NAME'):
+    logger.warning('cant find CHROMA_TENANT_NAME in environment variables')
+if os.environ.get('CHROMA_TENANT_NAME') is not None:
+    os.environ['CHROMA_TENANT_NAME'] = os.environ.get(
+        'CHROMA_TENANT_NAME')
+if not os.getenv('CHROMA_TENANT_NAME'):
+    logger.warning('cant find CHROMA_TENANT_NAME in .env file')
+if os.getenv('CHROMA_TENANT_NAME') is not None:
+    os.environ['CHROMA_TENANT_NAME'] = os.getenv('CHROMA_TENANT_NAME')
+if not os.environ.get('CHROMA_TENANT_NAME') and not os.getenv('CHROMA_TENANT_NAME'):
+    logger.warning(
+        'cant find CHROMA_TENANT_NAME in environment variables and .env file')
+    os.environ['CHROMA_TENANT_NAME'] = getpass.getpass(
+        'please enter CHROMA_TENANT_NAME:\n')
+    if os.environ['CHROMA_TENANT_NAME'] is not None:
+        logger.success('successfully loading CHROMA_TENANT_NAME key.')
+else:
+    logger.success('successfully loading CHROMA_TENANT_NAME key.')
+
+logger.debug('loading CHROMA_DATABASE_NAME key')
+if not os.environ.get('CHROMA_DATABASE_NAME'):
+    logger.warning('cant find CHROMA_DATABASE_NAME in environment variables')
+if os.environ.get('CHROMA_DATABASE_NAME') is not None:
+    os.environ['CHROMA_DATABASE_NAME'] = os.environ.get(
+        'CHROMA_DATABASE_NAME')
+if not os.getenv('CHROMA_DATABASE_NAME'):
+    logger.warning('cant find CHROMA_DATABASE_NAME in .env file')
+if os.getenv('CHROMA_DATABASE_NAME') is not None:
+    os.environ['CHROMA_DATABASE_NAME'] = os.getenv('CHROMA_DATABASE_NAME')
+if not os.environ.get('CHROMA_DATABASE_NAME') and not os.getenv('CHROMA_DATABASE_NAME'):
+    logger.warning(
+        'cant find CHROMA_DATABASE_NAME in environment variables and .env file')
+    os.environ['CHROMA_DATABASE_NAME'] = getpass.getpass(
+        'please enter CHROMA_DATABASE_NAME:\n')
+    if os.environ['CHROMA_DATABASE_NAME'] is not None:
+        logger.success('successfully loading CHROMA_DATABASE_NAME key.')
+else:
+    logger.success('successfully loading CHROMA_DATABASE_NAME key.')
+
+    logger.debug('loading CHROMA_COLLECTION_NAME key')
 if not os.environ.get('CHROMA_COLLECTION_NAME'):
     logger.warning('cant find CHROMA_COLLECTION_NAME in environment variables')
 if os.environ.get('CHROMA_COLLECTION_NAME') is not None:
@@ -177,16 +218,19 @@ else:
 
 
 def Error_Handler(func):
-    def Inner_Function(*args, **kwargs):
+    def Get_Function_Error(*args, **kwargs):
         try:
             func(*args, **kwargs)
         except Exception:
             logger.exception(
-                f'An error occurred while running function: {func.__name__}, please check the logs for more information. ')
-            # inspect(func)   # for more information set all=True
+                f'An error occurred while running function: {func.__name__}, please check the logs for more information')
+            # pprint("get code", func.__code__)
+            # pprint("get globals", func.__globals__)
+            # inspect(func.__code__, all=True)   # for more information set all=True
+            # pprint("for more debug information, in config_vars.py add to inspect all=True")
         except KeyboardInterrupt:
             logger.error('program terminated by user.')
-    return Inner_Function
+    return Get_Function_Error
 
 
 if __name__ == '__main__':

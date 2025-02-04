@@ -18,50 +18,33 @@ from langchain.docstore.document import Document
 
 
 def chat_ollama_config(model: str = 'llama3.2:1b', temperature: int = 0.2):
-    try:
-        # logger.info('starting ollama config')
-        ollama_config = ChatOllama(
-            model=model,   # llama3.2:3b, llama3.2:1b, mistral:7b
-            temperature=temperature,
-            num_predict=256,
-            cache=False,
-            base_url='http://localhost:11434',
-            # format="json",
-        )
-        return ollama_config
-
-    except Exception:
-        logger.exception(
-            'An error occurred while running the program, please check the logs for more information. ')
-        sys.exit(1)
-    except KeyboardInterrupt:
-        logger.error('program terminated by user.')
+    # logger.info('starting ollama config')
+    ollama_config = ChatOllama(
+        model=model,   # llama3.2:3b, llama3.2:1b, mistral:7b
+        temperature=temperature,
+        num_predict=256,
+        cache=False,
+        base_url='http://localhost:11434',
+        # format="json",
+    )
+    return ollama_config
 
 
 def ollama_llm_config(model: str = 'llama3.2:1b', temperature: int = 0.2):
-    try:
-        # logger.info('starting ollama config')
-        # model = OllamaLLM(model="llama3.2:1b")
-        ollama_config = OllamaLLM(
-            model=model,   # llama3.2:3b, llama3.2:1b, mistral:7b
-            temperature=temperature,
-            num_predict=256,
-            cache=None,
-            base_url='http://localhost:11434',
-            format='',
-        )
-        return ollama_config
-
-    except Exception:
-        logger.exception(
-            'An error occurred while running the program, please check the logs for more information. ')
-        sys.exit(1)
-    except KeyboardInterrupt:
-        logger.error('program terminated by user.')
+    # logger.info('starting ollama config')
+    # model = OllamaLLM(model="llama3.2:1b")
+    ollama_config = OllamaLLM(
+        model=model,   # llama3.2:3b, llama3.2:1b, mistral:7b
+        temperature=temperature,
+        num_predict=256,
+        cache=None,
+        base_url='http://localhost:11434',
+        format='',
+    )
+    return ollama_config
 
 
 # def build_document(document_data, date_of_document="01-01-2000", file_name="example.txt", service_provider=None):
-#     try:
 #         logger.info('building data structure in document')
 #         # print(document_data)
 #         # logger.debug('building data structure in document')
@@ -69,15 +52,8 @@ def ollama_llm_config(model: str = 'llama3.2:1b', temperature: int = 0.2):
 #         logger.success('successfully build data structure in document')
 #         return rebuild_document
 
-#     except Exception:
-#         logger.exception(
-#             'An error occurred while running the program, please check the logs for more information. ')
-#         sys.exit(1)
-#     except KeyboardInterrupt:
-#         logger.error('program terminated by user.')
 
 # def embed_document(document_data, chromadb_directory, chroma_collection_name, EMBEDDINGS_MODEL_NAME) -> HuggingFaceEmbeddings:
-#     try:
 #         logger.info('starting embeddings document data process')
 #         embedding_text = Chroma.from_documents(
 #             documents=document_data,
@@ -93,13 +69,7 @@ def ollama_llm_config(model: str = 'llama3.2:1b', temperature: int = 0.2):
 #         logger.debug('number of embeddings: ' + embeddings_number)
 #         return embedding_text
 
-#     except Exception:
-#         logger.exception(
-#             'An error occurred while running the program, please check the logs for more information. ')
-#         sys.exit(1)
-#     except KeyboardInterrupt:
-#         logger.error('program terminated by user.')
 
 if __name__ == '__main__':
-    logger.error('this is not the main script, exiting ...')
+    logger.error('this is not the main function, exiting ...')
     sys.exit()

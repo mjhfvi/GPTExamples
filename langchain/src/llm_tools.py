@@ -11,7 +11,6 @@ from loguru import logger
 
 
 # def load_local_env_var() -> os.getenv:
-#     try:
 #         logger.info('loading variables')
 #         load_dotenv(find_dotenv('/../.env'), verbose=True)
 
@@ -34,12 +33,6 @@ from loguru import logger
 
 #         return
 
-#     except Exception:
-#         logger.exception(
-#             'An error occurred while running the program, please check the logs for more information. ')
-#         sys.exit(1)
-#     except KeyboardInterrupt:
-#         logger.error('program terminated by user.')
 
 def tavily_search_results(query) -> TavilySearchResults:
     tavily_tool = TavilySearchResults(
@@ -61,3 +54,8 @@ def tavily_search_results(query) -> TavilySearchResults:
     # logger.debug(tavily_results)
 
     return tavily_results
+
+
+if __name__ == '__main__':
+    logger.error('this is not the main function, exiting ...')
+    sys.exit()

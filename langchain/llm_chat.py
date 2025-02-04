@@ -49,7 +49,7 @@ chromdb_query = 'what is the number of invoices in the data?'
 # chromdb_query = "what are the invoices for 2024"
 
 
-@Error_Handler
+# @Error_Handler
 def llm_chromadb_query():
     logger.info('starting chat with llm model, using chroma db query')
     # set cache ##
@@ -80,7 +80,7 @@ def llm_chromadb_query():
     print(llm_message)
 
 
-@Error_Handler
+# @Error_Handler
 def llm_wikipedia_query():
     logger.info('starting chat with llm model, using wikipedia query')
     # set cache ##

@@ -1,6 +1,7 @@
 **/.env
 **/.venv/*
-**/.cache/*.*
+**/.cache/*
+**/.cspell.json
 **/datasets/*
 **/chroma_db/*
 **/huggingface_access_token
@@ -14,8 +15,6 @@ autogen/examples/work_dir/*
 autogen-studio/models/*
 autogen-studio/agents/*
 
-fineTuneModel/worldcup.json
-fineTuneModel/worldcup_db.jsonl
 fineTuneModel/models/*
 
 Testing_Projects/*
@@ -25,4 +24,3 @@ anythingLLM/*
 langchain/archive/*
 /home/mjhfvi/repository/GPTExamples/.gitignore
 fineTuneModel/*
-langchain/.cspell.json

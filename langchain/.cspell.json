@@ -1,7 +1,9 @@
 {
   "dictionaries": [],
   "dictionaryDefinitions": [],
-  "ignorePaths": [],
+  "ignorePaths": [
+    ".env"
+  ],
   "ignoreWords": [
     "ngrok",
     "prettyformatter",
@@ -25,12 +27,17 @@
   "import": [],
   "version": "0.2",
   "words": [
+    "bearly",
     "bezetint",
+    "checkpointer",
     "chromdb",
     "docstore",
+    "icecream",
     "llms",
     "metadatas",
     "rprint",
+    "TAVILY",
+    "toolkits",
     "vectorstores"
   ]
 }
