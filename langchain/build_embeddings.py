@@ -32,6 +32,9 @@ from chromadb.utils.embedding_functions import create_langchain_embedding
 from dotenv import load_dotenv
 from icecream import ic
 from langchain_chroma import Chroma
+from langchain_community.document_loaders import DirectoryLoader
+from langchain_community.document_loaders import JSONLoader
+from langchain_community.document_loaders import TextLoader
 from langchain_core.documents import Document
 from langchain_huggingface import HuggingFaceEmbeddings
 from loguru import logger
@@ -44,33 +47,68 @@ from src import documents_loader
 from src import llm_tools
 from src import vector_store
 from src.config_tools import Error_Handler
-# from langchain_ollama import OllamaEmbeddings
-
-datasets_path = 'datasets/Bezeqint/raw/llm_datasets/'
-embedding_folder_path = 'datasets/Bezeqint/raw/embedded_datasets/'
 
 
 @Error_Handler
 def main():
     logger.info('running main function')
-    # load_documents_string = documents_loader.DocumentsLoaders(path=datasets_path)
+
+    def files_loader(path):
+        loader = DirectoryLoader(
+            path,
+            glob='**/*.json',
+            loader_cls=TextLoader,
+            show_progress=True
+        )
+        # loader = JSONLoader(
+        #     file_path=path,
+        #     jq_schema='.',
+        #     # content_key='content',
+        #     # metadata_func=metadata_func,
+        #     text_content=False,
+        #     # is_content_key_jq_parsable=False,
+        # )
+        return loader
+
+    load_files = files_loader(path=os.environ['DATASET_DIRECTORY'])
+    # print(load_files)
+    # inspect(load_files)
+
+    # load_documents_string = documents_loader.DocumentsLoaders(path=os.environ['DATASET_DIRECTORY'])
     # file_data = load_documents_string.load_json_files()
-    # json_data = json.loads(file_data)
-    # inspect(json_data)
+    # inspect(file_data)
+    # json_data = json.loads(load_files)
+    json_data = load_files.load()
+    print('\n\n', json_data[0].page_content)
+    print(json_data[0].metadata)
 
-    file_data = '''invoice_details"
-main_customer_number: 102063827
-source_tax_invoice_number: 2024200141400
-date_of_invoice_preparation: 31/01/2024
-billing_period: 01/2024"
-vendor_name: Bezeq International Ltd.
-customer_name: Tzahi Cohen
-paying_customer_number: 991865405
-subtotal: 55.82
-tax_amount: 10.49
-total_amount: 65.31'''
+    def json_to_clear_text(data):
+        text = ''
+        for key, value in data.items():
+            if value is None:
+                text += f"{key}: null\n"  # Explicitly handle None values
+            elif isinstance(value, dict):
+                text += f"{key}:\n"
+                # Recursively handle nested dictionaries
+                text += json_to_clear_text(value)
+            elif isinstance(value, list):
+                text += f"{key}:\n"
+                for item in value:
+                    if isinstance(item, dict):
+                        # Handle dictionaries inside lists
+                        text += json_to_clear_text(item)
+                    else:
+                        text += f"- {item}\n"
+            else:
+                text += f"{key}: {value}\n"
+        return text
 
-    metadata = {'source': 'Invoice_200141400.pdf'}
+    # Convert JSON to clear text
+    json_data = json.loads(json_data[0].page_content)
+    clear_text = json_to_clear_text(json_data)
+
+    # Print the clear text
+    print(clear_text)
 
     # document_data = Document(
     #     page_content=file_data,
@@ -101,22 +139,22 @@ total_amount: 65.31'''
     # )
     # print('running create collection')
 
-    working_collections = chromdb_tools.vector_store_connection.get_collection(
-        name=2024)
+    # working_collections = chromdb_tools.vector_store_connection.get_collection(
+    #     name=2024)
 
     # count_of_collections = vector_store_connection.count_collections()
     # print("number of collections: ", count_of_collections)
     # list_of_collections = vector_store_connection.list_collections()
     # print("list of collections: ", list_of_collections)
 
-    working_collections.add(
-        # ids="bb20b604-151b-43b2-92f8-4adf32d288aa",
-        ids='01-2024',
-        documents=file_data,
-        metadatas=metadata,
-        # embeddings=embedding_function,
-    )
-    print('adding documents to chromadb collection:', working_collections.name)
+    # working_collections.add(
+    #     # ids="bb20b604-151b-43b2-92f8-4adf32d288aa",
+    #     ids='01-2024',
+    #     documents=file_data,
+    #     metadatas=metadata,
+    #     # embeddings=embedding_function,
+    # )
+    # print('adding documents to chromadb collection:', working_collections.name)
 
     # get_collection_settings = vector_store_connection.get_settings()
     # for line in get_collection_settings:
@@ -129,14 +167,14 @@ total_amount: 65.31'''
     # print(query_of_collections, "\n\n")
     # inspect(working_collections, all=True)
 
-    get_collection_data = working_collections.get(
-        # ids='01-2024',
-        where_document={'$contains': '991865405'},
-        limit=5,
-        # include=['embeddings', 'metadatas', 'documents'],
-        include=['metadatas', 'documents'],
-    )
-    print('get_collection_data', get_collection_data)
+    # get_collection_data = working_collections.get(
+    #     # ids='01-2024',
+    #     where_document={'$contains': '991865405'},
+    #     limit=5,
+    #     # include=['embeddings', 'metadatas', 'documents'],
+    #     include=['metadatas', 'documents'],
+    # )
+    # print('get_collection_data', get_collection_data)
 
     # working_collections.delete(
     #     ids='01-2024'

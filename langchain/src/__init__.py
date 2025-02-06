@@ -13,7 +13,8 @@ load_dotenv(dotenv_path='.env', verbose=True)
 logger.info(f"LLM Langchain Project: v{os.environ.get('VERSION')}")
 
 env_list = ['DATASET_DIRECTORY', 'DATASET_FILE', 'CHROMA_DB_PATH', 'CHROMA_TENANT_NAME', 'CHROMA_DATABASE_NAME', 'CHROMA_COLLECTION_NAME', 'LLM_MODEL',
-            'EMBEDDINGS_MODEL_NAME', 'OLLAMA_URL', 'TAVILY_API_KEY', 'GIT_HUB_TOKEN']
+            # , 'TAVILY_API_KEY', 'GIT_HUB_TOKEN'
+            'EMBEDDINGS_MODEL_NAME', 'OLLAMA_URL']
 
 logger.debug('loading environment variables')
 for env in env_list:
