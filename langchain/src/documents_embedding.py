@@ -13,13 +13,16 @@ from langchain.embeddings import CacheBackedEmbeddings
 
 
 class DocumentsEmbeddings:
-    def __init__(self, model_name='llama3.2:3b'):
+    '''build document embeddings from text'''
+
+    def __init__(self, model_name: str = os.getenv('LLM_MODEL', 'llama3.2:1b'), base_url: str = os.getenv('OLLAMA_URL', 'http://localhost:11434')):
         self.model_name = model_name
+        self.base_url = base_url
 
     def model_embeddings(self) -> None:
         embeddings_string = OllamaEmbeddings(
             model=self.model_name,
-            base_url='http://localhost:11434'
+            base_url=self.base_url
         )
 
         # embeddings_string = HuggingFaceEmbeddings(
@@ -45,51 +48,28 @@ class DocumentsEmbeddings:
         return embeddings_string
 
     # def embeddings_documents(self):
-        # load_documents_string = documents_loader.DocumentsLoaders(path=datasets_path)
-        # files_list = load_documents_string.load_json_files()
-
         # embeddings_documents = embedding_string.embed_query(str(document_data))
         # print(str(embeddings_documents)[:100])  # Show the first 100 characters of the vector
 
-        # print(embeddings_documents)
-        # return embeddings_documents
+    def embeddings_text(self, document_data) -> list:
+        document_embeddings = self.model_embeddings().embed_query(str(document_data))
+        return document_embeddings
 
-    # def embeddings_text(embeddings_model, embeddings_data, folder_path='data', write_to_disk=False) -> list:
-    #         embeddings_config = embeddings.embed_query(embeddings_data)
-    #         # for index, embed in enumerate(embeddings_data):
+    # def embeddings_text_single_file(self, embeddings_string, data_to_embeddings, folder_path='data'):
+    #     logger.debug(data_to_embeddings)
+    #     embeddings_data_output = embeddings_string.embed_documents(data_to_embeddings)
+    #     if not os.path.exists(folder_path):
+    #         logger.debug(f"folder {folder_path} did not found, building new folder")
+    #         os.makedirs(folder_path)
 
-    #         #     # embeddings_config = embeddings_model.embed_documents(embed)
-    #         #     if not os.path.exists(folder_path):
-    #         #         logger.debug(f"folder {folder_path} was not found, building new folder")
-    #         #         os.makedirs(folder_path)
+    #     with open('data/embeddings.txt', 'w', encoding='utf-8') as output:
+    #         logger.debug("review values of 'embeddings_config': ")
+    #         logger.debug(embeddings_data_output[0][:7])
+    #         logger.debug(len(embeddings_data_output), 'number of embeddings items.')
+    #         output.write(str(embeddings_data_output))
+    #     return embeddings_data_output[0]
 
-    #         #     if write_to_disk is True:
-    #         # logger.debug('print embeddings text to disk')
-    #         # with open('data/embeddings.txt', 'w') as output:
-    #         #     logger.debug("review value of 'embed': ", embeddings_config[:5], '...')
-    #         #     output.write(str(embeddings_config))
-    #         #     logger.debug('successfully print embeddings text to disk')
-
-    #         return embeddings_config
-
-    def embeddings_text_single_file(embeddings_string, data_to_embeddings, folder_path='data'):
-        logger.debug(data_to_embeddings)
-        embeddings_data_output = embeddings_string.embed_documents(
-            data_to_embeddings)
-        if not os.path.exists(folder_path):
-            logger.debug(
-                f"folder {folder_path} did not found, building new folder")
-            os.makedirs(folder_path)
-
-        with open('data/embeddings.txt', 'w') as output:
-            logger.debug("review values of 'embeddings_config': ")
-            logger.debug(embeddings_data_output[0][:7])
-            logger.debug(len(embeddings_data_output),
-                         'Number of Embeddings Items.')
-            output.write(str(embeddings_data_output))
-        return embeddings_data_output[0]
-
-    def embedded_query(embeddings, query, embeddings_model):
+    def embedded_query(self, embeddings, query, embeddings_model):
         embedded_query = embeddings_model.embed_query(query)
         logger.debug("Preview 'embedded_query': ", embedded_query[:5])
         # print("embeddings model: ", embeddings.model_name)

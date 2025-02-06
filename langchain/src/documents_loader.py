@@ -29,26 +29,29 @@ from prettyformatter import pprint
 from pypdf import PdfReader
 from rich import inspect
 from rich import print_json
-from src import config_vars
+# from src import config_vars, llm_tools
 # from pydantic import BaseModel
 
 
 class DocumentsLoaders():
     '''Class to load documents from a folder and save them to disk'''
 
-    def __init__(self, path=os.environ['DATASET_DIRECTORY']):
+    def __init__(self, file=None, path=None, use_llm=False):
+        '''use file to load a specific file or path to load all files in a folder'''
         self.path = path
+        self.file = file
+        self.use_llm = use_llm
         # self.loader_cls = loader_cls
         # self.glob_pattern = glob_pattern
 
-    def build_dataset(self) -> list:
+    def build_dataset(self, use_llm) -> list:
         self.folder_check(self.path)
         logger.debug('loading all files in path: ' + str(self.path))
 
         files_found_list = glob.glob(pathname=os.path.join(
             self.path, '*.*'), include_hidden=False)
         logger.debug('found files in path: ' + str(len(files_found_list)))
-        logger.debug(files_found_list)
+        # logger.debug(files_found_list)
 
         for file in files_found_list:
             if file.endswith('.txt'):
@@ -70,6 +73,7 @@ class DocumentsLoaders():
 
                 self.save_file_to_disk(dataset_folder, str(
                     '/dataset_' + file_name + '.json'), str(rebuild_file))
+
             if file.endswith('.py'):
                 logger.debug('Working on file: ' + str(file))
                 file_data = self.python_loader(file)
@@ -98,22 +102,22 @@ class DocumentsLoaders():
 
                 file_name = Path(file).stem
                 folder_path = os.path.dirname(os.path.abspath(file))
-                dataset_folder = folder_path + '/datasets'
+                raw_dataset_folder = folder_path + '/raw_datasets'
+                llm_dataset_folder = folder_path + '/llm_datasets'
                 logger.debug(
-                    'creating a dataset folder to save files in: ' + str(dataset_folder))
-                self.folder_check(dataset_folder, build_new_folder=True)
+                    'creating dataset folder to save files in: ' + str(raw_dataset_folder))
+                self.folder_check(raw_dataset_folder, build_new_folder=True)
 
                 page_data = self.extract_data_from_pdf(file)
 
                 for pages in page_data:
                     documents_data.append(pages)
-                list_of_data = ' '.join([str(data)
-                                        for data in documents_data])
+                list_of_data = ' '.join([str(data)for data in documents_data])
                 format_file = self.reformat_text(list_of_data)
 
                 find_date = self.find_dates(format_file)
                 if 'bezeqint' in format_file:
-                    logger.debug("service found: 'bezeqint'")
+                    # logger.debug("service name found: 'bezeqint'")
                     found_service = 'bezeqint'
                 else:
                     logger.debug('service not found')
@@ -126,10 +130,20 @@ class DocumentsLoaders():
                     metadata={
                         'source': file, 'date': find_date[0], 'type': 'pdf', 'service': found_service}
                 )
-                logger.debug(document_data)
+                # logger.debug(document_data)
 
-                self.save_file_to_disk(dataset_folder, str(
-                    '/dataset_' + file_name + '.json'), str(document_data))
+                self.save_file_to_disk(raw_dataset_folder, str(
+                    '/raw_dataset_' + file_name + '.json'), str(document_data))
+                if use_llm is True:
+                    logger.debug('using llm to structure json dataset')
+                    logger.debug(
+                        'creating dataset folder to save files in: ' + str(llm_dataset_folder))
+                    self.folder_check(llm_dataset_folder,
+                                      build_new_folder=True)
+                    llm_dataset = llm_tools.build_dataset_llm(document_data)
+                    self.save_file_to_disk(llm_dataset_folder, str(
+                        '/llm_dataset_' + file_name + '.json'), str(llm_dataset))
+        return document_data
 
     def load_json_files(self):
         logger.debug('loading json file from folder: ' + self.path)
@@ -143,7 +157,6 @@ class DocumentsLoaders():
                 # json_file_list.append(file)
                 file_data = self.json_loader(file)
                 logger.debug(file_data)
-
         return file_data
 
     def txt_loader(self, path):
@@ -189,7 +202,7 @@ class DocumentsLoaders():
         logger.debug('md loader: ' + path)
         # text_loader_kwargs = {'autodetect_encoding': True}
         loader = UnstructuredMarkdownLoader(
-            file_path=path,
+            file_name=path,
             mode='single',
             # glob='**/[!.]*',
             # loader_cls=UnstructuredFileLoader,
@@ -203,10 +216,10 @@ class DocumentsLoaders():
         logger.debug(documents[0].page_content[:100])
         return documents
 
-    def python_loader(self, file_path):
-        """Directory Loader for python files\nOnly use 'file_path' value to set the folder path and search all md files"""
+    def python_loader(self, file_name):
+        """Directory Loader for python files\nOnly use 'file_name' value to set the folder path and search all md files"""
         loader = DirectoryLoader(
-            file_path,
+            file_name,
             glob='**/*.py',
             loader_cls=PythonLoader,
             show_progress=True
@@ -219,12 +232,12 @@ class DocumentsLoaders():
         # print('Creating vectorstore.')
         return documents
 
-    def csv_loader(self, file_path):
-        """Directory Loader for csv files\nOnly use 'file_path' value to set the folder path and search all md files"""
+    def csv_loader(self, file_name):
+        """Directory Loader for csv files\nOnly use 'file_name' value to set the folder path and search all md files"""
         # text_loader_kwargs = {'autodetect_encoding': True}
 
         loader = CSVLoader(
-            file_path=file_path,
+            file_name=file_name,
             encoding='utf8'
             # csv_args={
             #     'delimiter': ',',
@@ -245,23 +258,20 @@ class DocumentsLoaders():
                 os.makedirs(path)
                 logger.debug(f"folder '{path}' created.")
                 return
-        if folder_check is True:
-            logger.debug(f"folder '{path}' exists.")
+        # if folder_check is True:
+            # logger.debug(f"folder '{path}' exists.")
         if not folder_check:
             logger.warning(
                 f"folder '{path}' Does Not Exist, please provide a valid path.")
             exit(1)
 
-    def save_file_to_disk(self, folder_path, file_path, file_data):
-        file = open(folder_path + file_path, 'w', encoding='utf-8')
-        file.write(file_data)
-        file.close()
-
     def extract_data_from_pdf(self, file):
-        logger.debug('extracting data from pdf')
+        # logger.debug('extracting data from pdf')
         reader = PdfReader(file)
         # print(str(reader.metadata))
-        logger.debug('number of pages in pdf file: ' + str(len(reader.pages)))
+        logger.debug('found ' + str(len(reader.pages)) +
+                     ' pages in pdf file: ' + str(file.split('/')[-1]))
+        # logger.debug('number of pages in pdf file: ' + str(len(reader.pages)))
         page = reader.pages
         pages_data = []
         for page in reader.pages:
@@ -272,7 +282,7 @@ class DocumentsLoaders():
                 pages_data.append(translated_text)
             if check_data is False:
                 pages_data.append(page_data)
-        logger.debug(pages_data)
+        # logger.debug(pages_data)
         return pages_data
 
     def contains_hebrew(self, file):
@@ -280,44 +290,44 @@ class DocumentsLoaders():
         return any(ord(char) in hebrew_range for char in file)
 
     def translated_to_english(self, document):
-        try:
-            logger.debug('translating pages to english')
-            translated_document = []
-            if not self.contains_hebrew(document):
-                translated_document.append(document)
-            if self.contains_hebrew(document):
-                logger.debug(
-                    'found hebrew characters in file, translating to english')
-                # fixed_text = document[::-1]
-                # fixed_text = normalize('NFKD', fixed_text)
-                translated_document.append(GoogleTranslator(
-                    source='hebrew', target='english').translate(document))
-            logger.debug(translated_document)
-            return translated_document
-
-        except Exception:
-            logger.exception(
-                'An error occurred while running the program, please check the logs for more information. ')
-            sys.exit(1)
-        except KeyboardInterrupt:
-            logger.error('program terminated by user.')
+        # logger.debug('translating pages to english')
+        translated_document = []
+        if not self.contains_hebrew(document):
+            translated_document.append(document)
+        if self.contains_hebrew(document):
+            logger.debug(
+                'found hebrew characters in page, translating page to english')
+            # inspect(document)
+            # fixed_text = document[::-1]
+            # fixed_text = normalize('NFKD', fixed_text)
+            translated_document.append(GoogleTranslator(
+                source='hebrew', target='english').translate(document))
+        # logger.debug(translated_document)
+        return translated_document
 
     def reformat_text(self, document):
-        cleaned = document.replace('[', '').replace(
+        cleaned_document = document.replace('[', '').replace(
             ']', '').replace("\"", '').replace("'", '')
         # fixed02 = self.change_to_single_quotes(fixed01)
         # cleaned = fixed02.replace("[", "").replace("]", "").replace("'", "").replace("\\n", "\n")
-        return cleaned
+        return cleaned_document
 
     def change_to_single_quotes(self, file_data):
         logger.debug('changing all double_quotes to single_quotes')
         return str(file_data).replace('"', "'")
 
     def find_dates(self, file_data):
-        logger.debug('finding dates in file')
+        # logger.debug('searching for dates in file')
         return re.findall(r'\d{2}/\d{4}', file_data)
 
-    # def validate_json(self, file_path):
+    def save_file_to_disk(self, folder_path: str = '.', file_name: str = None, file_data: str = None):
+        file = open(folder_path + file_name, 'w', encoding='utf-8')
+        file.write(file_data)
+        file.close()
+
+    # def get_files_from_folder(folder_path):
+
+    # def validate_json(self, file_name):
     #     schema = {
     #         "type": "object",
     #         "properties": {
@@ -329,13 +339,13 @@ class DocumentsLoaders():
     #         "required": ["name", "age"]
     #     }
 
-    #     validate_json = validate(instance=file_path, schema=schema)
+    #     validate_json = validate(instance=file_name, schema=schema)
     #     print(validate_json)
 
-    # def pdf_loader(self, file_path):
+    # def pdf_loader(self, file_name):
     #     try:
-    #         loader = PyPDFLoader(file_path=file_path)
-    #         loader = UnstructuredLoader(file_path)
+    #         loader = PyPDFLoader(file_name=file_name)
+    #         loader = UnstructuredLoader(file_name)
     #         documents = loader.load()
     #         logger.debug('Documents parts Loaded: ' + str(len(documents)))
     #         # logger.debug('Documents metadata:' + str(documents[0].metadata))

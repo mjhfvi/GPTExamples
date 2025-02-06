@@ -96,7 +96,10 @@ class ChromaConnectionString():
             port=chroma_port,
             # ssl = False,
             # headers = None,
-            settings=Settings(allow_reset=True, anonymized_telemetry=False),
+            settings=Settings(
+                allow_reset=True,
+                anonymized_telemetry=False
+            ),
             tenant=tenant_name,
             database=database_name,
         )
@@ -314,6 +317,7 @@ def create_tenant_database(chroma_host='localhost', chroma_port=None, tenant_nam
         logger.debug(
             f'successfully created tenant {tenant_name} and database {database_name}')
         # inspect(list_of_tenant)
+        return list_of_tenant
     except Exception as error:
         logger.warning(f'error creating tenant: {error}')
         return None
