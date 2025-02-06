@@ -13,8 +13,8 @@ from pydantic import ValidationError
 from rich import inspect
 from src import documents_loader
 from src import vector_store
-from src.config_vars import Error_Handler
-from src.config_vars import TODAY
+from src.config_tools import Error_Handler
+from src.llm_tools import TODAY
 
 
 @Error_Handler
@@ -25,8 +25,8 @@ def main():
     # chroma_collection_connection_string_data = vector_store.ChromaConnectionString(chromadb_path=env_var[2], chroma_collection_name=env_var[3])
     chroma_collection_connection_string_data = vector_store.ChromaConnectionString(
         connection_method='http',
-        chroma_host='localhost',
-        chroma_port=32312,
+        chroma_host=os.environ['CHROMA_HOST'],
+        chroma_port=os.environ['CHROMA_PORT'],
         chroma_collection_name=os.environ['CHROMA_COLLECTION_NAME'],
         tenant_name=os.environ['CHROMA_TENANT_NAME'],
         database_name=os.environ['CHROMA_DATABASE_NAME']
@@ -40,8 +40,8 @@ def main():
     # create_tenant_database = vector_store.create_tenant_database(chroma_host='localhost', chroma_port=32312, tenant_name='invoice', database_name='bezeqint')
     # ic(inspect(create_tenant_database))
 
-    create_collection = chroma_collection_connection_string_data.create_collection()
-    ic(inspect(create_collection))
+    # create_collection = chroma_collection_connection_string_data.create_collection()
+    # ic(inspect(create_collection))
 
     # chroma_collection_connection_string_data.delete_collection()
 

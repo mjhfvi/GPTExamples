@@ -20,14 +20,11 @@ from loguru import logger
 from prettyformatter import pprint
 from rich import inspect
 from rich import print_json
+from src import chromdb_tools
 from src import llm_tools
-from src import local_tools
 from src import ollama_chat
 from src import vector_store
-from src.config_vars import Error_Handler
-from src.config_vars import OLLAMA_CHAT_CONFIG
-from src.config_vars import OLLAMA_MODEL_CONFIG
-from src.config_vars import TODAY
+from src.config_tools import Error_Handler
 
 from langchain.agents import AgentType
 from langchain.agents import initialize_agent
