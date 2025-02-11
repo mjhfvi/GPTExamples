@@ -14,5 +14,5 @@ pre-commit
 sentence_transformers; sys_platform == 'linux'
 tokenizers; sys_platform == 'win32'
 tokenizers==0.20.3; sys_platform == 'linux'
-transformers==4.46.3; sys_platform == 'linux'
+transformers==4.48.0; sys_platform == 'linux'
 unstructured
